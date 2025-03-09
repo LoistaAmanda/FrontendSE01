@@ -12,17 +12,17 @@ const index = () => {
 // Menambah data users
 const store = (nama, age, alamat, email) => {
   users.push({ nama, age, alamat, email });
-  console.log(`Data ${nama} berhasil ditambahkan!`);
+  console.log(`Data ${nama} berhasil ditambahkan`);
 };
 
-// Menghapus data berdasarkan nama
+// Menghapus data 
 const destroy = (nama) => {
   const index = users.findIndex(user => user.nama === nama);
   if (index !== -1) {
     users.splice(index, 1);
-    console.log(`Data ${nama} berhasil dihapus!`);
+    console.log(`Data ${nama} berhasil dihapus`);
   } else {
-    console.log(`Data ${nama} tidak ditemukan!`);
+    console.log(`Data ${nama} tidak ditemukan`);
   }
 };
 
