@@ -4,9 +4,11 @@ import users from "./data.mjs";
 // Menampilkan data users
 const index = () => {
   console.log("Daftar Data Users:");
-  users.forEach((user, index) => {
-    console.log(`${index + 1}. Nama: ${user.nama}, Age: ${user.age}, Alamat: ${user.alamat}, Email: ${user.email}`);
-  });
+  users.map((user, idx) =>
+    console.log(
+      `${idx + 1}. Nama: ${user.nama}, Age: ${user.age}, Alamat: ${user.alamat}, Email: ${user.email}`
+    )
+  );
 };
 
 // Menambah data users
