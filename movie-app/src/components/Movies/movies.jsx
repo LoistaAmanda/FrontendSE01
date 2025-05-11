@@ -3,9 +3,11 @@ import Movie from "../movie/movie";
 import data from "../../utils/constans/data";
 import { useState } from "react";
 
-function Movies() {
+function Movies(props) {
   //const movies = data;
-  const [movies, setMovies] = useState(data);
+  //const [movies, setMovies] = useState(data);
+
+  const {movies, setMovies} = props;
 
   function handleClick() {
     const movie = {
