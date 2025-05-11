@@ -8,8 +8,10 @@ function AddMovieForm(props) {
     date: "",
   });
 
-  const [isTitleError, setIsTitleError] = useState(false);
-  const [isDateError, setIsDateError] = useState(false);
+  const [errors, setErrors] = useState({
+    title: false,
+    date: false,
+  });
 
   const { movies, setMovies } = props;
 
@@ -21,24 +23,32 @@ function AddMovieForm(props) {
       [name]: value,
     });
 
-    if (name === "title") setIsTitleError(false);
-    if (name === "date") setIsDateError(false);
+    setErrors({
+      ...errors,
+      [name]: false,
+    });
   }
 
   function validate() {
     const { title, date } = formData;
 
+    let newErrors = {
+      title: false,
+      date: false,
+    };
+
     let valid = true;
 
     if (title === "") {
-      setIsTitleError(true);
+      newErrors.title = true;
       valid = false;
     }
     if (date === "") {
-      setIsDateError(true);
+      newErrors.date = true;
       valid = false;
     }
 
+    setErrors(newErrors);
     return valid;
   }
 
@@ -72,7 +82,7 @@ function AddMovieForm(props) {
           name="title"
           onChange={handleChange}
         />
-        {isTitleError && <Alert>Title Wajib Diisi</Alert>}
+        {errors.title && <Alert>Title Wajib Diisi</Alert>}
 
         <input
           className={styles.input_form}
@@ -82,7 +92,7 @@ function AddMovieForm(props) {
           name="date"
           onChange={handleChange}
         />
-        {isDateError && <Alert>Wajib Diisi</Alert>}
+        {errors.date && <Alert>Wajib Diisi</Alert>}
 
         <button className={styles.button_form}>Add Movie</button>
       </form>
