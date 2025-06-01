@@ -3,7 +3,8 @@ import Hero from "../components/Hero/Hero";
 import Movies from "../components/Movies/movies";
 // import Footer from "../components/Footer/Footer";
 import AddMovieForm from "../components/addMovie/AddMovie";
-import data from "../utils/constans/data"
+import data from "../utils/constans/data";
+import Button from "../components/UI/button";
 import { useState } from "react";
 
 
@@ -15,8 +16,10 @@ function Home() {
       {/* <Navbar /> */}
       <main>
         <Hero />
-        <Movies  movies={movies} setMovies={setMovies}/>
-        <AddMovieForm movies={movies} setMovies={setMovies}/>
+        <Button variant="primary">Lihat</Button>
+        <Button variant="secondary" full>Lihat</Button>
+        <Movies movies={movies} setMovies={setMovies} />
+        <AddMovieForm movies={movies} setMovies={setMovies} />
         {/* <Counter /> */}
       </main>
       {/* <Footer /> */}
