@@ -1,6 +1,9 @@
 import { useState, useEffect } from "react";
 //import styles from "./Hero.module.css";
 import styled from "styled-components";
+import { Heading, Paragraph } from "../UI/Button/typograpy.jsx"
+import { Image } from "../UI/Button/media.jsx"
+import Button from "../UI/Button/index.jsx"
 
 const StyledHero = styled.div`
   margin: 1rem;
@@ -99,13 +102,19 @@ function Hero() {
     <StyledHero>
       <section className="hero">
         <div className="hero__left">
-          <h2>{movie.Title}</h2>
-          <h3>{movie.Genre}</h3>
-          <p>{movie.Plot}</p>
-          <button>Watch</button>
+          <Heading size="2.44rem" color="#4361ee">
+            {movie.Title}
+          </Heading>
+          <Heading as="h3" size="1.59rem" color="#b5179e">
+            {movie.Genre}
+          </Heading>
+          <Paragraph color="#64748b">{movie.Plot}</Paragraph>
+          <Button $variant="primary" size="md">
+            Watch
+          </Button>
         </div>
         <div className="hero__right">
-          <img src={movie.Poster} alt="poster" />
+          <Image src={movie.Poster} alt="poster" width="100%" rounded="25px" />
         </div>
       </section>
     </StyledHero>

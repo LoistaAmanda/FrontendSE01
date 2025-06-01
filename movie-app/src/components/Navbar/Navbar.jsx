@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { Heading } from "../UI/Button/typograpy.jsx";
 
 const StyledNavbar = styled.div`
   background-color: #4361ee;
@@ -9,17 +10,12 @@ const StyledNavbar = styled.div`
   nav {
     display: flex;
     flex-direction: column;
-    
+
     @media (min-width: 768px) {
       flex-direction: row;
       justify-content: space-between;
       align-items: center;
     }
-  }
-
-  h1 {
-    font-size: 2.4rem;
-    margin-bottom: 1rem;
   }
 
   ul {
@@ -45,16 +41,22 @@ const StyledNavbar = styled.div`
   a {
     text-decoration: none;
     color: #fff;
+    font-weight: 600;
+    transition: color 0.3s ease;
+
+    &:hover {
+      color: #90caf9; /* lighter blue on hover */
+    }
   }
 `;
-
-
 
 function Navbar() {
   return (
     <StyledNavbar>
       <nav>
-        <h1>Movie App</h1>
+        <Heading size="2.4rem" color="#fff" margin="0 0 1rem 0">
+          Movie App
+        </Heading>
         <ul>
           <li>
             <Link to="/">Home</Link>

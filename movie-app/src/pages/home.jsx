@@ -16,8 +16,8 @@ function Home() {
       {/* <Navbar /> */}
       <main>
         <Hero />
-        <Button variant="primary">Lihat</Button>
-        <Button variant="secondary" full>Lihat</Button>
+        {/* <Button variant="primary">Lihat</Button>
+        <Button variant="secondary" full>Lihat</Button> */}
         <Movies movies={movies} setMovies={setMovies} />
         <AddMovieForm movies={movies} setMovies={setMovies} />
         {/* <Counter /> */}
