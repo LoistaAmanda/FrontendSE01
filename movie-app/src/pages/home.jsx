@@ -4,7 +4,7 @@ import Movies from "../components/Movies/movies";
 // import Footer from "../components/Footer/Footer";
 import AddMovieForm from "../components/addMovie/AddMovie";
 import data from "../utils/constans/data";
-import Button from "../components/UI/button";
+// import Button from "../components/UI/button/index";
 import { useState } from "react";
 
 
