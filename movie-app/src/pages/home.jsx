@@ -1,16 +1,15 @@
 // import Navbar from "../components/Navbar/Navbar";
 import Hero from "../components/Hero/Hero";
-import Movies from "../components/Movies/movies";
+import Movies from "../components/Movies/Movies";
 // import Footer from "../components/Footer/Footer";
 import AddMovieForm from "../components/addMovie/AddMovie";
 import data from "../utils/constans/data";
 // import Button from "../components/UI/button/index";
 import { useState } from "react";
 
-
 function Home() {
-
   const [movies, setMovies] = useState(data);
+
   return (
     <div>
       {/* <Navbar /> */}
