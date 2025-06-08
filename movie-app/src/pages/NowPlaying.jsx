@@ -1,51 +1,39 @@
-// src/pages/NowPlayingMovie.jsx
 import { useEffect, useState } from "react";
 import axios from "axios";
+import Hero from "../components/Hero/Hero.jsx";
+import Movies from "../components/Movies/Movies.jsx";
 
-function NowPlayingMovie() {
-  const [movies, setMovies] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+function NowPlaying() {
   const API_KEY = import.meta.env.VITE_API_KEY;
+  const URL = `https://api.themoviedb.org/3/movie/now_playing?api_key=${API_KEY}`;
+  const [movies, setMovies] = useState([]);
 
   useEffect(() => {
-    async function fetchNowPlaying() {
+    async function getNowPlayingMovies() {
       try {
-        setLoading(true);
-        const response = await axios.get(
-          `https://api.themoviedb.org/3/movie/now_playing?api_key=${API_KEY}&language=en-US&page=1`
-        );
-        setMovies(response.data.results);
-        setLoading(false);
-      } catch (err) {
-        setError("Gagal mengambil data Now Playing");
-        setLoading(false);
+        const response = await axios.get(URL);
+        if (response.data && response.data.results) {
+          setMovies(response.data.results);
+        } else {
+          console.error(
+            "Data dari API tidak memiliki properti 'results':",
+            response.data
+          );
+        }
+      } catch (error) {
+        console.error("Gagal mengambil data film now playing:", error);
       }
     }
 
-    fetchNowPlaying();
-  }, []);
-
-  if (loading) return <p>Loading now playing movies...</p>;
-  if (error) return <p>{error}</p>;
+    getNowPlayingMovies();
+  }, [URL]);
 
   return (
     <>
-      <h2>Now Playing Movies</h2>
-      <div style={{ display: "flex", flexWrap: "wrap", gap: "1rem" }}>
-        {movies.map((movie) => (
-          <div key={movie.id} style={{ width: "200px" }}>
-            <img
-              src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`}
-              alt={movie.title}
-              style={{ width: "100%" }}
-            />
-            <h4>{movie.title}</h4>
-          </div>
-        ))}
-      </div>
+      <Hero />
+      <Movies movies={movies} />
     </>
   );
 }
 
-export default NowPlayingMovie;
+export default NowPlaying;
