@@ -1,62 +1,39 @@
-import { useState, useEffect } from "react";
+// import styles from "./Hero.module.css";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
-import axios from "axios"; // Import axios
-import { Heading, Paragraph } from "../UI/Button/typograpy.jsx";
-import { Image } from "../UI/Button/media.jsx";
-import Button from "../UI/Button/index.jsx";
+import Button from "../Ui/Button/Index.jsx";
+import axios from "axios";
 
 const StyledHero = styled.div`
-  margin: 1rem;
-
+  // padding: 1rem
   section {
     display: flex;
     flex-direction: column;
-    text-align: center;
+    // padding: 7rem;
   }
-
-  div {
-    margin-bottom: 1rem;
-  }
-
   h2 {
     color: #4361ee;
     margin-bottom: 1rem;
     font-size: 2.44rem;
   }
-
   h3 {
     color: #b5179e;
     margin-bottom: 1rem;
     font-size: 1.59rem;
   }
-
-  p {
-    color: #64748b;
-    margin-bottom: 1rem;
-  }
-
-  button {
-    padding: 0.8rem 2rem 0.5rem;
-    border: none;
-    border-radius: 10px;
-    background-color: #4361ee;
-    color: #fff;
-    font-size: 1rem;
-  }
-
   img {
     max-width: 100%;
     height: auto;
     border-radius: 25px;
+    margin-left: 1rem;
+    margin-top: 1rem;
   }
 
   @media (min-width: 992px) {
-    .container {
-      max-width: 1200px;
-      margin: 3rem auto;
-    }
+    max-width: 1200px;
+    margin: 3rem auto;
 
-    .hero {
+    section {
       margin: 0 1rem;
       flex-direction: row;
       justify-content: space-between;
@@ -65,81 +42,69 @@ const StyledHero = styled.div`
     }
 
     .hero__left {
-      flex-basis: 40%;
+      flex-basis: 60%;
     }
 
     .hero__right {
-      flex-basis: 25%;
+      flex-basis: 40%;
     }
   }
 `;
 
 function Hero() {
   const [movie, setMovie] = useState("");
+  // const genres = movie && movie.genres.map((genre)=> genre.name).join(" , ");
+  // const idTrailer = movie && movie.videos.results[0].key;
+  // const overview = movie.poster_path;
   const API_KEY = import.meta.env.VITE_API_KEY;
 
   useEffect(() => {
     async function fetchTrendingMovies() {
-      const response = await fetch(
-        "https://www.omdbapi.com/?apikey=fcf50ae6&i=tt2975590"
-      );
-      const data = await response.json();
-      return data;
+      const URL = `https://api.themoviedb.org/3/trending/movie/day?api_key=${API_KEY}`;
+      const response = await axios(URL);
+      const firstMovie = response.data.results[0]; //Mengambil data pertama
+      return firstMovie;
     }
+    fetchTrendingMovies();
 
-    async function fetchDetailMovies() {
+    async function fetchDetailMovie() {
       const trendingMovie = await fetchTrendingMovies();
-      const id = trendingMovie.imdbID;
+      const id = trendingMovie.id;
 
       const params = `?api_key=${API_KEY}&append_to_response=videos`;
       const URL = `https://api.themoviedb.org/3/movie/${id}${params}`;
-      const response = await axios.get(URL);
-
-      setMovie({ ...trendingMovie, ...response.data });
+      const response = await axios(URL);
+      setMovie(response.data);
     }
+    fetchDetailMovie();
+    // fetchTrendingMovies();
+  }, [API_KEY]);
 
-    fetchDetailMovies();
-  }, []);
-
-  const genres =
-    movie && movie.genres
-      ? movie.genres.map((genre) => genre.name).join(", ")
-      : "";
-
-  const idTrailer =
-    movie && movie.videos && movie.videos.results.length > 0
-      ? movie.videos.results[0].key
-      : "";
-
+  // useEffect(()=>{
+  //     async function fetchMovie() {
+  //         const response = await fetch ("https://www.omdbapi.com/?apikey=fcf50ae6&i=tt2975590");
+  //         const data = await response.json();
+  //         setMovie(data);
+  //     }
+  //     fetchMovie();
+  // }, []);
   return (
     <StyledHero>
-      <section className="hero">
+      <section>
         <div className="hero__left">
-          <Heading size="2.44rem" color="#4361ee">
-            {movie.Title || movie.title}
-          </Heading>
-          <h3>{genres}</h3>
-          <p>{movie.overview || movie.Plot}</p>
-          {idTrailer && (
-            <Button
-              as="a"
-              href={`https://www.youtube.com/watch?v=${idTrailer}`}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Watch Movie
-            </Button>
-          )}
+          <h2>{movie.title}</h2>
+          <p>{movie.overview}</p>
+          <Button variant="secondary" full>
+            Watch Movie
+          </Button>
+          {/* <Button as="a" href={`https://www.youtube.com/watch?v=${idTrailer}`} target="_blank" variant="secondary" full>Watch Movie</Button> */}
+          {/* <button >Watch</button> */}
         </div>
         <div className="hero__right">
-          {movie.Poster && (
-            <Image
-              src={movie.Poster}
-              alt="poster"
-              width="100%"
-              $rounded="25px"
-            />
-          )}
+          <img
+            src={`http://image.tmdb.org/t/p/w300/${movie.poster_path}`}
+            alt=""
+          />
         </div>
       </section>
     </StyledHero>

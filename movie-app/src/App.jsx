@@ -1,24 +1,41 @@
-import { Route, Routes } from "react-router-dom";
 import CreateMovie from "./pages/Create";
-import NowPlayingMovie from "./pages/NowPlaying";
-import PopularMovie from "./pages/Popular";
-import TopRatedMovie from "./pages/TopRated";
-import Home from "./pages/home";
-import Layout from "./Layout/index"
-import Counter from "./components/Counter/Counter";
+import Home from "./pages/Home";
+import { Route, Routes } from "react-router-dom"; //install dulu react router dom di terminal
+import NowPlaying from "./pages/NowPlaying";
+import Popular from "./pages/Popular";
+import TopRated from "./pages/TopRated";
+import Layout from "./Layout/Index";
+import DetailMovie from "./pages/Detail";
+import { useState } from "react";
+import data from "./utils/constans/data";
+import MoviesContext from "./components/context/MoviesContext";
 
 function App() {
+  const [movies, setMovies] = useState(data);
+  const contextValue = {
+    movies,
+    setMovies,
+  };
+
   return (
-    <Layout>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/movie/create" element={<CreateMovie />} />
-        <Route path="/movie/now" element={<NowPlayingMovie />} />
-        <Route path="/movie/popular" element={<PopularMovie />} />
-        <Route path="/movie/top" element={<TopRatedMovie/>} />
-        <Route path='/counters' element={<Counter/>}></Route>
-      </Routes>
-    </Layout>
+    <>
+      <MoviesContext.Provider value={contextValue}>
+        <Layout>
+          {/* <Home /> */}
+          <Routes>
+            <Route path="/" element={<Home />}></Route>
+            <Route
+              path="/movie/create"
+              element={<CreateMovie />}
+            ></Route>
+            <Route path="/movie/now" element={<NowPlaying />}></Route>
+            <Route path="/movie/popular" element={<Popular />}></Route>
+            <Route path="/movie/top" element={<TopRated />}></Route>
+            <Route path="/movie/:id" element={<DetailMovie />}></Route>
+          </Routes>
+        </Layout>
+      </MoviesContext.Provider>
+    </>
   );
 }
 
